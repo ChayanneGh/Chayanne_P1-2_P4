@@ -11,7 +11,7 @@ public class AutorService(IConfiguration configuration)
 {
     private SqliteConnection createConnection => new SqliteConnection(configuration.GetConnectionString("SqliteConnection"));
 
-    public async Task<Autor> CreateAsync(Autor autorDto)
+    public async Task<Autor?> CreateAsync(Autor autorDto)
     {
         using var connection = createConnection;
         var resultado = await connection.ExecuteScalarAsync<int>(AutorSql.Insert, autorDto);
@@ -32,7 +32,7 @@ public class AutorService(IConfiguration configuration)
         return resultado;
     }
 
-    public async Task<Autor> GetIdAsync(int IdAutor)
+    public async Task<Autor?> GetIdAsync(long IdAutor)
     {
         using var connection = createConnection;
         Autor autor = await connection.QueryFirstOrDefaultAsync<Autor>(AutorSql.GetRow, new { IdAutor });
@@ -57,7 +57,7 @@ public class AutorService(IConfiguration configuration)
 
         return true;
     }
-    public async Task<bool> DeleteAsync(int IdAutor)
+    public async Task<bool> DeleteAsync(long IdAutor)
     {
         using var connection = createConnection;
         var resultado = await connection.ExecuteAsync(AutorSql.Delete, new { IdAutor });
