@@ -11,39 +11,74 @@ public class AutoresController(AutorService autorService): ControllerBase
     [HttpGet]
     public async Task<IActionResult> autoresGet()
     {
-        var lista = await autorService.GetAsync();
-        return Ok(lista);
+        try
+        {
+            var lista = await autorService.GetAsync();
+            return Ok(lista);
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
 
     [HttpGet("{IdAutor}")]
     public async Task<IActionResult> autoresGetId(int IdAutor)
     {
-        Autor autor = await autorService.GetIdAsync(IdAutor);
-        return Ok(autor);
+        try
+        {
+            var autor = await autorService.GetIdAsync(IdAutor);
+            return Ok(autor);
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
 
     [HttpPost]
     public async Task<IActionResult> autoresPost([FromBody] Autor autorDto)
     {
-        Autor autor = await autorService.CreateAsync(autorDto);
-        return Ok(autor);
+        try
+        { 
+            Autor autor = await autorService.CreateAsync(autorDto);
+            return Ok(autor);
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
 
     [HttpPut("{IdAutor}")]
     public async Task<IActionResult> autoresPut(int IdAutor, [FromBody] Autor autorDto)
     {
-        if (autorDto.IdAutor != 0 && autorDto.IdAutor != IdAutor)
+        try
         {
-            return BadRequest($"Los IDs no coinciden, ID:{IdAutor} != IdAutor:{autorDto.IdAutor}");
-        };
-        await autorService.UpdateAsync(autorDto);
-        return Ok(new { mensaje = "El registro se a Actualizado"});
+            if (autorDto.IdAutor != 0 && autorDto.IdAutor != IdAutor)
+            {
+                return NotFound();
+            };
+            await autorService.UpdateAsync(autorDto);
+            return Ok(new { mensaje = "El registro se a Actualizado" });
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
 
     [HttpDelete("{IdAutor}")]
     public async Task<IActionResult> autoresDelete(int IdAutor)
     {
-        await autorService.DeleteAsync(IdAutor);
-        return Ok(new { mensaje = "El registro se ha Eliminado"});
+        try
+        { 
+            await autorService.DeleteAsync(IdAutor);
+            return Ok(new { mensaje = "El registro se ha Eliminado"});
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
 }

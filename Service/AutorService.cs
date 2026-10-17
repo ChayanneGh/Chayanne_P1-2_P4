@@ -18,12 +18,12 @@ public class AutorService(IConfiguration configuration)
 
         if (resultado == null || resultado < 1)
         {
-            throw new Exception("Fallo la insercion del autor en la base de datos.");
+            return null;
         };
 
         return autorDto with { IdAutor = resultado};
     }
-
+     
     public async Task<IEnumerable<Autor>> GetAsync()
     {
         using var connection = createConnection;
@@ -39,7 +39,7 @@ public class AutorService(IConfiguration configuration)
 
         if (autor == null)
         {
-            throw new Exception($"Fallo la optencion del autor ID:{IdAutor} en la base de datos.");
+            return null;
         };
 
         return autor;
@@ -52,7 +52,7 @@ public class AutorService(IConfiguration configuration)
 
         if (resultado < 1)
         {
-            throw new Exception($"Fallo la Actualizacion del autor ID:{autorDto.IdAutor} en la base de datos");
+            return null;
         }
 
         return true;
@@ -64,8 +64,9 @@ public class AutorService(IConfiguration configuration)
 
         if (resultado < 1)
         {
-            throw new Exception($"Fallo la eliminacion del Autor ID:{IdAutor} en la base de datos");
-        };
+            return null;
+        }
+        ;
 
         return true;
     }
