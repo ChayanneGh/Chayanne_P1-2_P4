@@ -16,7 +16,7 @@ public class AutorService(IConfiguration configuration)
         using var connection = createConnection;
         var resultado = await connection.ExecuteScalarAsync<int>(AutorSql.Insert, autorDto);
 
-        if (resultado == null || resultado < 1)
+        if (resultado < 1)
         {
             return null;
         };
@@ -52,7 +52,7 @@ public class AutorService(IConfiguration configuration)
 
         if (resultado < 1)
         {
-            return null;
+            return false;
         }
 
         return true;
@@ -64,7 +64,7 @@ public class AutorService(IConfiguration configuration)
 
         if (resultado < 1)
         {
-            return null;
+            return false;
         }
         ;
 
