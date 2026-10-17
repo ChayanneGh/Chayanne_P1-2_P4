@@ -6,7 +6,7 @@ namespace Chayanne_P1_2_P4.Controllers;
 
 [ApiController]
 [Route("api/[Controller]")]
-public class AutorController(AutorService autorService): ControllerBase
+public class AutoresController(AutorService autorService): ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> autoresGet()
