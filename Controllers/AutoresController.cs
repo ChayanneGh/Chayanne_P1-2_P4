@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Chayanne_P1_2_P4.Controllers;
 
 [ApiController]
-[Route("api/autores")]
+[Route("api/Autores")]
 public class AutoresController(AutorService autorService): ControllerBase
 {
-    [HttpGet]
+    [HttpGet]//no funciona
     public async Task<IActionResult> autoresGet()
     {
         try
@@ -22,21 +22,21 @@ public class AutoresController(AutorService autorService): ControllerBase
         }
     }
 
-    [HttpGet("{IdAutor}")]
+    [HttpGet("{IdAutor}")]//no funciona
     public async Task<IActionResult> autoresGetId(long IdAutor)
     {
         try
         {
             var autor = await autorService.GetIdAsync(IdAutor);
             return Ok(autor);
-        }
+    }
         catch
         {
             return NotFound();
-        }
+}
     }
 
-    [HttpPost]
+    [HttpPost]//funciona
     public async Task<IActionResult> autoresPost([FromBody] Autor autorDto)
     {
         try
@@ -50,7 +50,7 @@ public class AutoresController(AutorService autorService): ControllerBase
         }
     }
 
-    [HttpPut("{IdAutor}")]
+    [HttpPut("{IdAutor}")]//no funciona
     public async Task<IActionResult> autoresPut(long IdAutor, [FromBody] Autor autorDto)
     {
         try
@@ -68,7 +68,7 @@ public class AutoresController(AutorService autorService): ControllerBase
         }
     }
 
-    [HttpDelete("{IdAutor}")]
+    [HttpDelete("{IdAutor}")]//funciona
     public async Task<IActionResult> autoresDelete(long IdAutor)
     {
         try
